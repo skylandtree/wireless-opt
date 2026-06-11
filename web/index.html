@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RadioPilot 网优工作台</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-mark"></span>
+          <div>
+            <strong>RadioPilot</strong>
+            <small>无线网优工单调度工作台</small>
+          </div>
+        </div>
+        <div class="top-summary">
+          <div><span>待处理工单</span><strong id="summary-open">100</strong></div>
+          <div><span>平均处理时长</span><strong>1.9h</strong></div>
+          <div><span>自动闭环率</span><strong>20.9%</strong></div>
+          <div><span>今日方案草案</span><strong>37</strong></div>
+        </div>
+        <div class="runtime-badge"><span id="health-dot" class="dot"></span><span id="health-text">连接中</span></div>
+      </header>
+
+      <section class="command-bar">
+        <div class="selected-card">
+          <span>当前工单</span>
+          <strong id="selected-ticket-title">请选择左侧工单</strong>
+          <small id="selected-ticket-meta">从工单池选择一条工单后执行分析</small>
+        </div>
+        <div class="command-main">
+          <input id="query" autocomplete="off" value="查询高科路_001小区的工单信息，分析根因，并生成优化方案" />
+          <div class="command-actions">
+            <button id="plan-btn" class="secondary">规划</button>
+            <button id="run-btn">执行分析</button>
+          </div>
+          <div id="quick-prompts" class="quick-prompts"></div>
+        </div>
+      </section>
+
+      <section class="workspace-grid">
+        <aside class="panel workorders-panel">
+          <div class="panel-head">
+            <span>工单池</span>
+            <small id="ticket-count">加载中</small>
+          </div>
+          <div class="filters">
+            <button>全部日期</button>
+            <button>全部根因</button>
+            <button>全部状态</button>
+          </div>
+          <div id="tickets" class="ticket-list"></div>
+        </aside>
+
+        <section class="center-stack">
+          <section class="panel diagnosis-panel">
+            <div class="panel-head">
+              <span>诊断视图</span>
+              <small id="dag-cell">等待规划</small>
+            </div>
+            <div class="diagnosis-grid">
+              <div class="kpi-card">
+                <div class="kpi-head">
+                  <span>关键 KPI</span>
+                  <small id="kpi-cell">未选择小区</small>
+                </div>
+                <div class="kpi-metrics">
+                  <div><span>RSRP</span><strong id="m-rsrp">-</strong></div>
+                  <div><span>SINR</span><strong id="m-sinr">-</strong></div>
+                  <div><span>PRB</span><strong id="m-prb">-</strong></div>
+                  <div><span>掉线率</span><strong id="m-drop">-</strong></div>
+                </div>
+                <canvas id="kpi-chart" width="720" height="210"></canvas>
+              </div>
+
+              <div class="side-cards">
+                <div class="cause-card">
+                  <div class="kpi-head"><span>根因候选</span><small>动态更新</small></div>
+                  <div id="cause-bars" class="cause-bars"></div>
+                </div>
+                <div class="loop-card">
+                  <div class="kpi-head"><span>闭环进度</span><small id="loop-status">待执行</small></div>
+                  <div id="loop-flow" class="loop-flow">
+                    <span>接入</span><span>诊断</span><span>根因</span><span>方案</span><span>报告</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel dag-panel">
+            <div class="panel-head">
+              <span>Skill DAG</span>
+              <small id="trace-id">TRACE -</small>
+            </div>
+            <div id="skill-dag" class="skill-dag"></div>
+          </section>
+
+          <section class="panel result-panel">
+            <div class="panel-head">
+              <span>分析结果</span>
+              <small id="cell-label">未选择小区</small>
+            </div>
+            <div id="answer" class="answer">从左侧选择工单，或直接输入自然语言任务。</div>
+            <div id="root-causes" class="root-list"></div>
+            <div id="risk" class="risk-box">暂无风险审阅。</div>
+          </section>
+        </section>
+
+        <aside class="panel runtime-panel">
+          <div class="panel-head">
+            <span>智能体运行时</span>
+            <small id="runtime-status">idle</small>
+          </div>
+          <div class="runtime-tabs"><span>观察</span><span>假设</span><span>调用</span><span>证据</span><span>结论</span></div>
+          <div id="runtime-console" class="runtime-console"></div>
+        </aside>
+      </section>
+    </main>
+    <script src="/app.js"></script>
+  </body>
+</html>
