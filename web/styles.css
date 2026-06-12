@@ -392,7 +392,8 @@ button.triggered::after {
 .loop-card { padding: 12px; min-height: 0; }
 
 .loop-card {
-  min-height: 112px;
+  min-height: 136px;
+  overflow: visible;
 }
 
 .cause-bars {
@@ -421,8 +422,8 @@ button.triggered::after {
 }
 
 .loop-flow span {
-  min-height: 38px;
-  padding: 6px 4px;
+  min-height: 50px;
+  padding: 8px 4px;
   display: grid;
   place-items: center;
   border: 1px solid var(--line);
